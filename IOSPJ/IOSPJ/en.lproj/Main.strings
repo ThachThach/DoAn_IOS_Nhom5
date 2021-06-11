@@ -1,0 +1,54 @@
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "29D-sm-LfH"; */
+"29D-sm-LfH.normalTitle" = "Login";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "9WV-8R-mdL"; */
+"9WV-8R-mdL.placeholder" = "Password";
+
+/* Class = "UIButton"; normalTitle = "Quan ly nhan vien"; ObjectID = "9om-8v-Edr"; */
+"9om-8v-Edr.normalTitle" = "Quan ly nhan vien";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Als-DE-gLC"; */
+"Als-DE-gLC.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Error"; ObjectID = "Bg2-xP-g91"; */
+"Bg2-xP-g91.text" = "Error";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "CWa-FR-dDi"; */
+"CWa-FR-dDi.placeholder" = "Email";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "JiI-q0-De1"; */
+"JiI-q0-De1.normalTitle" = "Login";
+
+/* Class = "UIButton"; normalTitle = "San pham"; ObjectID = "Pcj-NP-af8"; */
+"Pcj-NP-af8.normalTitle" = "San pham";
+
+/* Class = "UIButton"; normalTitle = "So do phong ban"; ObjectID = "TzE-jA-klZ"; */
+"TzE-jA-klZ.normalTitle" = "So do phong ban";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "WOU-M5-3cp"; */
+"WOU-M5-3cp.placeholder" = "Password";
+
+/* Class = "UIButton"; normalTitle = "Nhom san pham"; ObjectID = "Z7r-mc-g7C"; */
+"Z7r-mc-g7C.normalTitle" = "Nhom san pham";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "k37-BF-cNP"; */
+"k37-BF-cNP.text" = "Title";
+
+/* Class = "UIButton"; normalTitle = "Sign up"; ObjectID = "lnr-e1-VcN"; */
+"lnr-e1-VcN.normalTitle" = "Sign up";
+
+/* Class = "UILabel"; text = "Error"; ObjectID = "nDH-VG-K94"; */
+"nDH-VG-K94.text" = "Error";
+
+/* Class = "UIButton"; normalTitle = "Sing up"; ObjectID = "omJ-rB-qhQ"; */
+"omJ-rB-qhQ.normalTitle" = "Sing up";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "pp9-np-OsR"; */
+"pp9-np-OsR.placeholder" = "Email";
+
+/* Class = "UITextField"; placeholder = "Ten quan"; ObjectID = "rz0-6R-sjt"; */
+"rz0-6R-sjt.placeholder" = "Ten quan";
+
+/* Class = "UIButton"; normalTitle = "Logout"; ObjectID = "xNE-aY-yRE"; */
+"xNE-aY-yRE.normalTitle" = "Logout";
