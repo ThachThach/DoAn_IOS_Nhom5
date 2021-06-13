@@ -2,7 +2,7 @@
 //  ThuChiTableViewCell.swift
 //  IOSPJ
 //
-//  Created by CNTT on 6/11/21.
+//  Created by CNTT on 6/13/21.
 //  Copyright © 2021 fit.tdc. All rights reserved.
 //
 
@@ -10,6 +10,11 @@ import UIKit
 
 class ThuChiTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var thangLabel: UILabel!
+    @IBOutlet weak var tongThuLabel: UILabel!
+    @IBOutlet weak var tongVonLabel: UILabel!
+    @IBOutlet weak var tongLoiLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
