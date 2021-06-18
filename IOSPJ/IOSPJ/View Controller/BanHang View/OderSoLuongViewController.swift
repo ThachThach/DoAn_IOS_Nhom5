@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class OderSoLuongViewController: UIViewController {
 
@@ -14,6 +15,8 @@ class OderSoLuongViewController: UIViewController {
     @IBOutlet weak var tenSanPhamLabel: UILabel!
     @IBOutlet weak var steperSoLuonh: UIStepper!
     @IBOutlet weak var btnSave: UIBarButtonItem!
+    
+    var ref = Database.database().reference()
     
     var ban = ""
     var soLuong = ""
@@ -34,6 +37,8 @@ class OderSoLuongViewController: UIViewController {
         super.prepare(for: segue, sender: sender)
         if let button = sender as? UIBarButtonItem, button === btnSave{
             soLuong = soLuongLabel?.text as! String
+            
+            ref.child("oder2").child("\(ban)").setValue(["\(tenSanPham)" : "\(soLuong)"])
             dong = "\(dong)"
         }
     }

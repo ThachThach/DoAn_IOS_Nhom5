@@ -302,7 +302,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="uHa-ln-SH2"/>
                     </view>
-                    <navigationItem key="navigationItem" id="GYK-ZV-RYO"/>
+                    <navigationItem key="navigationItem" id="GYK-ZV-RYO">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="3n1-0b-UgF">
+                            <connections>
+                                <action selector="refreshTableview:" destination="Y9A-zz-c4Y" id="CVr-AQ-wcj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="J76-S5-Q33" id="GKs-DA-WTx"/>
                     </connections>
