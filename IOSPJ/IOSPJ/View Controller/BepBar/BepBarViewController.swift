@@ -7,14 +7,70 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 class BepBarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
     @IBOutlet weak var tableView: UITableView!
     var expertise = [Dictionary<String, Any>]()
     
+    let db = Firestore.firestore()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let ref = Database.database().reference()
+//        ref.child("oder2").observe(.childAdded, with: { (snapshot) -> Void in
+//            //print("Test \(snapshot.value as? [String: Any])")
+//            let value = snapshot.value as? NSDictionary
+//            let vl = value?.allValues as? NSDictionary
+//            print("Test 2  \(value)")
+//
+//        })
+        
+        let allPlaces = ref.child("oder2")
+        
+        allPlaces.observeSingleEvent(of: .value, with: { snapshot in
+            for child in snapshot.children {
+                let snap = child as! DataSnapshot
+                //let placeDict = snap.value as! [String: Any]
+                //let info = placeDict["sting"] as! String
+                //let moreInfo = placeDict["moreinfo"] as! String
+                print("test: \(snap.childSnapshot(forPath: "sting"))")
+            }
+        })
+        
+        
+//            ref.child("oder2").observe(DataEventType.value, with: { (snapshot) in
+//                let postDict = snapshot.value as? [String : AnyObject] ?? [:]
+//                print("Test: \(postDict)")
+//            })
+        
+        
+        
+        
+//        db.collection("oder").getDocuments() { (querySnapshot, err) in
+//            if let err = err {
+//                print("Error getting documents: \(err)")
+//            } else {
+//                for document in querySnapshot!.documents {
+//
+//                    //print("\(document.documentID) => \(document.data())")
+//                    //print("Test: \(document.data()["tensanpham"] as? String ?? "")")
+//                    let tenSanPham = document.data()["tensanpham"] as? String ?? ""
+//                    let giaBan = document.data()["giaban"] as? String ?? ""
+//                    let giaNhap = document.data()["gianhap"] as? String ?? ""
+//                    let soLuongOder = document.data()["soluongoder"] as? String ?? ""
+//
+//                    print("Test \(document.data())")
+//                }
+//            }
+//        }
+        
+        
+        
+        
         self.view.backgroundColor = .clear
         createDataSource()
         tableView.tableFooterView = UIView(frame: .zero)

@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import Firebase
 
 class OderTableViewCell: UITableViewCell {
 
     @IBOutlet weak var soLuongLabel: UILabel!
     @IBOutlet weak var tenMonLabel: UILabel!
-    @IBOutlet weak var soLuongSrepper: UIStepper!
+    //@IBOutlet weak var soLuongSrepper: UIStepper!
+    @IBOutlet weak var giaBanLabel: UILabel!
+    
+    private let database = Database.database().reference()
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,8 +30,8 @@ class OderTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    
-    @IBAction func stepperTapped(_ sender: UIStepper) {
-        soLuongLabel.text = Int(sender.value).description
-    }
+//
+//    @IBAction func stepperTapped(_ sender: UIStepper) {
+//        soLuongLabel.text = Int(sender.value).description
+//    }
 }

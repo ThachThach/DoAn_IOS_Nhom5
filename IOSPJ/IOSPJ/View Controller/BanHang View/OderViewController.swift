@@ -12,44 +12,43 @@ import Firebase
 
 class OderViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-        let myData = ["first", "first1", "first2", "first3", "first4", "first5"]
-    var ref: DatabaseReference!
-    private let database = Database.database().reference()
+    let db = Firestore.firestore()
+    var ban = ""
     
-    var posData = [String]()
+    @IBOutlet weak var btnSave: UIBarButtonItem!
+    
+    var listSanPham = [SanPham]()
+    private let database = Database.database().reference()
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ref = Database.database().reference()
+        //Lay du lieu tu man hinh BanHangViewcontroller
         
-        
-        //doc du lieu tu firebase realtime
-        /*
-        ref.child("ban").observe(.childAdded, with: { (snapshot) -> Void in
-            //print("Test: \(snapshot.childSnapshot(forPath: "tenban").value)")
-            let value = snapshot.value as? NSDictionary
-            let tenBan = value?["tenban"] as? String ?? ""
-            let trangThai = value?["trangthai"] as? String ?? ""
-        
-            print("Test: \(tenBan)");
-            print("Test: \(trangThai)");
-        })
-        */
-        
-        var i = 1
-        repeat {
-            //var banID = Auth.auth().currentUser?.uid
-            var ban = "hoanghuulong\(i)"
-            var trangThai = "1"
-            
-            self.ref.child("ban").child(ban).setValue(["tenban": ban])
-            self.ref.child("ban").child(ban).setValue(["trangthai": trangThai])
-            i = i + 1
-        } while  i <= 5
-        
-        
+        //doc du lieu tu firestore
+        db.collection("sanpham").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    //print("\(document.documentID) => \(document.data())")
+                    //print("Test: \(document.data()["tensanpham"] as? String ?? "")")
+                    let tenSanPham = document.data()["tensanpham"] as? String ?? ""
+                    let giaBan = document.data()["giaban"] as? String ?? ""
+                    let giaNhap = document.data()["gianhap"] as? String ?? ""
+                    let soLuongOder = document.data()["soluongoder"] as? String ?? ""
+                    
+                    if let sanPham = SanPham(tenSanPham: tenSanPham, soLuongOder: soLuongOder, giaVon: giaNhap, giaBan: giaBan) {
+                        self.listSanPham.append(sanPham)
+                        
+                        let row = self.listSanPham.count
+                        let indexPath = IndexPath(row: row-1, section: 0)
+                        self.tableView.insertRows(at: [indexPath], with: .automatic)
+                    }
+                }
+            }
+        }
         
         // Do any additional setup after loading the view.
         let nib = UINib(nibName: "OderTableViewCell", bundle: nil)
@@ -62,51 +61,99 @@ class OderViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //MARK: Tableview
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myData.count;
+        return listSanPham.count;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OderTableViewCell", for: indexPath) as! OderTableViewCell
-        cell.tenMonLabel?.text = myData[indexPath.row]
+        cell.tenMonLabel?.text = listSanPham[indexPath.row].tenSanPham
+        cell.soLuongLabel?.text = listSanPham[indexPath.row].soLuongOder
+        print("ABC: \(listSanPham)")
+        cell.giaBanLabel?.text = listSanPham[indexPath.row].giaBan
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        print("Test: \(indexPath.row)")
+        
+        let abc = UIStoryboard(name: "Main", bundle: nil)
+        let soLuong = abc.instantiateViewController(withIdentifier: "soluong") as! OderSoLuongViewController
+        soLuong.tenSanPham = listSanPham[indexPath.row].tenSanPham
+        soLuong.ban = ban
+        soLuong.dong = "\(indexPath.row)"
+        self.navigationController?.pushViewController(soLuong, animated: true)
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    /*
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+ */
+    
+    // MARK: - Navigation
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
-    /*
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "celloder", for: indexPath)
-        return cell
+    @IBAction func unWinFromOder(sender: UIStoryboardSegue){
+        if let sourceController = sender.source as? OderSoLuongViewController{
+            let soLuong = sourceController.soLuong as String
+           // listSanPham[dong].soLuongOder = soLuong
+            if let selectedIndexpath = tableView.indexPathForSelectedRow{
+                listSanPham[selectedIndexpath.row].soLuongOder = soLuong
+                tableView.reloadRows(at: [selectedIndexpath], with: .none)
+            }
+        }
     }
-*/
- 
-    /*
-    // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        //print("Test")
+        if let button = sender as? UIBarButtonItem, button === btnSave{
+            let date = Date()
+//            var object: [String: Any] = [
+//                "sanpham" : "",
+//                "thoigian" : "\(date)"
+//            ]
+//
+//            var i = 0
+//            while i < listSanPham.count {
+//                let itemSanPham = [
+//                    "\(listSanPham[i].tenSanPham)" :[
+//                        "soluong" : listSanPham[i].soLuongOder,
+//                        "giaban" : listSanPham[i].giaBan
+//                    ]
+//                ]
+//
+//                // get existing items, or create new array if doesn't exist
+//                object["sanpham"] = (object["sanpham"] as? [[String: Any]] ?? []) + [itemSanPham]
+//                i = i + 1
+//            }
+//
+//            print("Test: \(object)")
+//
+//
+//
+//            let ref2 = database.child("oder").child("\(ban)")
+//
+//            ref2.setValue(object)
+            
+            let ref2 = database.child("oder2").child("\(ban)")
+            
+            var object = [Dictionary<String, Any>]()
+            var i = 0
+            while i < listSanPham.count {
+                
+                object.append(["\(listSanPham[i].tenSanPham)" : "\(listSanPham[i].soLuongOder)", "thoigian" : "\(date)"])
+                i = i + 1
+            }
+            ref2.setValue(object)
+            print("Test \(object)")
+        }
     }
-    */
-
 }
-
-
-/*
- 
- let userID = Auth.auth().currentUser?.uid
- ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
- // Get user value
- let value = snapshot.value as? NSDictionary
- username = value?["username"] as? String ?? ""
- print("Test1: \(value)")
- // ...
- }) { (error) in
- print(error.localizedDescription)
- }
- 
- */
