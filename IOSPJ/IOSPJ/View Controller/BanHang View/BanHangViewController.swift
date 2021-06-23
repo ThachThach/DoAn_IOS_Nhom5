@@ -24,17 +24,16 @@ class BanHangViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
-        
-        
-        ref.child("ban").observe(.childAdded, with: { (snapshot) -> Void in
-            //print("Test: \(snapshot.childSnapshot(forPath: "tenban").value)")
-            let value = snapshot.value as? NSDictionary
-            let tenBan = value?["tenban"] as? String ?? ""
-            let trangThai = value?["trangthai"] as? String ?? ""
+        ref.child("ban2").observe(.childAdded, with: { (snapshot) -> Void in
+
+            let key = snapshot.key
+            var value = snapshot.value as? String ?? ""
             
-            //print("Test: \(tenBan)");
-            //print("Test: \(trangThai)");
-            if let oder = BanOder(tenBan: tenBan, trangThai: trangThai){
+            if value != "0" {
+                value = "true"
+            }
+            
+            if let oder = BanOder(tenBan: key, trangThai: value){
                 self.listBan.append(oder)
                 
                 let row = self.listBan.count
@@ -43,9 +42,6 @@ class BanHangViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         })
         
-        /*
- 
- */
         let nib = UINib(nibName: "BanHangTableViewCell", bundle: nil)
         
         self.tableView.register(nib, forCellReuseIdentifier: "BanHangTableViewCell")
@@ -53,6 +49,42 @@ class BanHangViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableView.dataSource = self
     }
     
+    //MARK: lay du lieu
+    func getData() {
+        ref = Database.database().reference()
+        var i = 0
+        ref.child("ban2").observe(.childAdded, with: { (snapshot) -> Void in
+            
+            if i == 0 {
+                
+                self.listBan.removeAll()
+                i = i + 1
+            }
+            //print("Test: \(snapshot.childSnapshot(forPath: "tenban").value)")
+            
+            let key = snapshot.key
+            var value = snapshot.value as? String ?? ""
+            
+            if value != "0" {
+                value = "true"
+            }
+            
+            
+            if let oder = BanOder(tenBan: key, trangThai: value){
+                self.listBan.append(oder)
+            }
+            self.tableView.reloadData()
+        })
+    }
+    
+    //MARK: refresh data
+    
+    @IBAction func refresh(_ sender: Any) {
+        getData()
+    }
+    
+    
+    //MARK: tableview
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listBan.count
     }

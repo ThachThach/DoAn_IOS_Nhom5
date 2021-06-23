@@ -16,9 +16,12 @@ class OderViewController: UIViewController, UITableViewDelegate, UITableViewData
     var ban = ""
     
     @IBOutlet weak var btnSave: UIBarButtonItem!
+    @IBOutlet weak var btnTraBan: UIButton!
+    @IBOutlet weak var btnThanhToan: UIButton!
     
     var listSanPham = [SanPham]()
     private let database = Database.database().reference()
+    var ref = Database.database().reference()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -47,6 +50,7 @@ class OderViewController: UIViewController, UITableViewDelegate, UITableViewData
                         self.tableView.insertRows(at: [indexPath], with: .automatic)
                     }
                 }
+                self.tableView.reloadData()
             }
         }
         
@@ -68,25 +72,22 @@ class OderViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = tableView.dequeueReusableCell(withIdentifier: "OderTableViewCell", for: indexPath) as! OderTableViewCell
         cell.tenMonLabel?.text = listSanPham[indexPath.row].tenSanPham
         cell.soLuongLabel?.text = listSanPham[indexPath.row].soLuongOder
-        print("ABC: \(listSanPham)")
         cell.giaBanLabel?.text = listSanPham[indexPath.row].giaBan
         return cell
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        print("Test: \(indexPath.row)")
+        //print("Test : \(indexPath.row)")
         
         let abc = UIStoryboard(name: "Main", bundle: nil)
         let soLuong = abc.instantiateViewController(withIdentifier: "soluong") as! OderSoLuongViewController
         soLuong.tenSanPham = listSanPham[indexPath.row].tenSanPham
         soLuong.ban = ban
+        
         soLuong.dong = "\(indexPath.row)"
         self.navigationController?.pushViewController(soLuong, animated: true)
     }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+
     
     /*
     @IBAction func cancel(_ sender: UIBarButtonItem) {
@@ -99,61 +100,88 @@ class OderViewController: UIViewController, UITableViewDelegate, UITableViewData
         dismiss(animated: true, completion: nil)
     }
     
+    
+    @IBAction func traBanTapped(_ sender: Any) {
+        
+    }
+    
     @IBAction func unWinFromOder(sender: UIStoryboardSegue){
         if let sourceController = sender.source as? OderSoLuongViewController{
             let soLuong = sourceController.soLuong as String
-           // listSanPham[dong].soLuongOder = soLuong
-            if let selectedIndexpath = tableView.indexPathForSelectedRow{
-                listSanPham[selectedIndexpath.row].soLuongOder = soLuong
-                tableView.reloadRows(at: [selectedIndexpath], with: .none)
-            }
+            let dong = Int(sourceController.dong as String)
+   
+            listSanPham[dong!].soLuongOder = soLuong
+            tableView.delegate = self
+            tableView.dataSource = self
+            tableView.reloadData()
         }
     }
-
+    
+    @IBAction func unWinFromOder2(sender: UIStoryboardSegue){
+        
+    }
+    
+    @IBAction func thanhToanTapped(_ sender: Any) {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let thanhtoan = sb.instantiateViewController(withIdentifier: "thanhtoan") as! ThanhToanViewController
+        var list = [Oder]()
+        var listThanhToan = [SanPham]()
+        
+        let allPlaces = ref.child("oder2").child(ban)
+        
+        allPlaces.observeSingleEvent(of: .value, with: { snapshot in
+            for child in snapshot.children {
+                let snap = child as! DataSnapshot
+                let soluong = snap.value as? String ?? ""
+                list.append(Oder(tenSanPham: snap.key, soLuong: soluong)!)
+            }
+            
+            var i = 0
+        
+            while i < list.count{
+                var j = 0
+                while j < self.listSanPham.count{
+                    if list[i].tenSanPham == self.listSanPham[j].tenSanPham{
+                        self.listSanPham[j].soLuongOder = list[i].soLuong
+                        listThanhToan.append(self.listSanPham[j])
+                    }
+                    j+=1
+                }
+                i = i + 1
+            }
+            
+            thanhtoan.listSP = listThanhToan
+            thanhtoan.ban = self.ban
+            self.navigationController?.pushViewController(thanhtoan, animated: true)
+        })
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         //print("Test")
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
         if let button = sender as? UIBarButtonItem, button === btnSave{
-            let date = Date()
-//            var object: [String: Any] = [
-//                "sanpham" : "",
-//                "thoigian" : "\(date)"
-//            ]
-//
-//            var i = 0
-//            while i < listSanPham.count {
-//                let itemSanPham = [
-//                    "\(listSanPham[i].tenSanPham)" :[
-//                        "soluong" : listSanPham[i].soLuongOder,
-//                        "giaban" : listSanPham[i].giaBan
-//                    ]
-//                ]
-//
-//                // get existing items, or create new array if doesn't exist
-//                object["sanpham"] = (object["sanpham"] as? [[String: Any]] ?? []) + [itemSanPham]
-//                i = i + 1
-//            }
-//
-//            print("Test: \(object)")
-//
-//
-//
-//            let ref2 = database.child("oder").child("\(ban)")
-//
-//            ref2.setValue(object)
-            
-            let ref2 = database.child("oder2").child("\(ban)")
-            
-            var object = [Dictionary<String, Any>]()
             var i = 0
+            var kiemTra:Int = 0
             while i < listSanPham.count {
                 
-                object.append(["\(listSanPham[i].tenSanPham)" : "\(listSanPham[i].soLuongOder)", "thoigian" : "\(date)"])
+                if listSanPham[i].soLuongOder != "0", listSanPham[i].soLuongOder != ""{
+                    kiemTra = kiemTra + 1
+                    ref.child("oder2").child(ban).child(listSanPham[i].tenSanPham).setValue(listSanPham[i].soLuongOder)
+                }
                 i = i + 1
             }
-            ref2.setValue(object)
-            print("Test \(object)")
+            if kiemTra == 0{
+                ref.child("ban2").child(ban).setValue("0")
+            }else{
+                ref.child("ban2").child(ban).setValue("1")
+            }
+        }
+        if let button2 = sender as? UIButton, button2 === btnTraBan{
+            ref.child("ban2").child(ban).setValue("0")
+            ref.child("oder2").child(ban).removeValue()
         }
     }
 }

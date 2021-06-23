@@ -27,6 +27,7 @@ class OderSoLuongViewController: UIViewController {
         super.viewDidLoad()
         tenSanPhamLabel.text = tenSanPham
         
+        
         print("ABC: \(dong)")
     }
     
@@ -37,8 +38,6 @@ class OderSoLuongViewController: UIViewController {
         super.prepare(for: segue, sender: sender)
         if let button = sender as? UIBarButtonItem, button === btnSave{
             soLuong = soLuongLabel?.text as! String
-            
-            ref.child("oder2").child("\(ban)").setValue(["\(tenSanPham)" : "\(soLuong)"])
             dong = "\(dong)"
         }
     }
