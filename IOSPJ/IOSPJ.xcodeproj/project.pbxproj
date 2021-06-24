@@ -42,6 +42,7 @@
 		662707872670BB9900998A5C /* BanHangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 662707852670BB9900998A5C /* BanHangTableViewCell.xib */; };
 		662707892670C69200998A5C /* OderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662707882670C69200998A5C /* OderViewController.swift */; };
 		6641D3922684FA430058FCD7 /* ThongTinUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6641D3912684FA430058FCD7 /* ThongTinUserViewController.swift */; };
+		6641D394268525D90058FCD7 /* EdiSanPhamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6641D393268525D90058FCD7 /* EdiSanPhamViewController.swift */; };
 		6675006726688BA0003BA92B /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675006626688BA0003BA92B /* SettingViewController.swift */; };
 		6675006E2668DA5D003BA92B /* BanHangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675006D2668DA5D003BA92B /* BanHangViewController.swift */; };
 		667D1A952671B4B600985B10 /* BepBarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667D1A932671B4B600985B10 /* BepBarTableViewCell.swift */; };
@@ -105,6 +106,7 @@
 		662707852670BB9900998A5C /* BanHangTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BanHangTableViewCell.xib; sourceTree = "<group>"; };
 		662707882670C69200998A5C /* OderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OderViewController.swift; sourceTree = "<group>"; };
 		6641D3912684FA430058FCD7 /* ThongTinUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThongTinUserViewController.swift; sourceTree = "<group>"; };
+		6641D393268525D90058FCD7 /* EdiSanPhamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdiSanPhamViewController.swift; sourceTree = "<group>"; };
 		6675006626688BA0003BA92B /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		6675006D2668DA5D003BA92B /* BanHangViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BanHangViewController.swift; sourceTree = "<group>"; };
 		667D1A932671B4B600985B10 /* BepBarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BepBarTableViewCell.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				660FF21926838B8A009E7F14 /* NhanVienTableViewCell.xib */,
 				660FF24C26843D0A009E7F14 /* ThemNhanVienViewController.swift */,
 				6641D3912684FA430058FCD7 /* ThongTinUserViewController.swift */,
+				6641D393268525D90058FCD7 /* EdiSanPhamViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				6613BDDE267658290031A629 /* BanOder.swift in Sources */,
 				667D1AA22672684500985B10 /* SanPhamTableViewCell.swift in Sources */,
 				660FF21526838B11009E7F14 /* NhanVienViewController.swift in Sources */,
+				6641D394268525D90058FCD7 /* EdiSanPhamViewController.swift in Sources */,
 				6613BDD72675D4910031A629 /* ThuChiTableViewCell.swift in Sources */,
 				6620E1BD2667B38D004F343F /* AppDelegate.swift in Sources */,
 				66D11015267EDF79007303FE /* Oder.swift in Sources */,

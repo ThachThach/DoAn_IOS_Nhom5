@@ -12,7 +12,7 @@ import FirebaseDatabase
 
 class SanPhamViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    let data = ["sp1","sp2", "sp3", "sp4", "sp5", "sp6", "sp7"]
+    //let data = ["sp1","sp2", "sp3", "sp4", "sp5", "sp6", "sp7"]
     private let database = Database.database().reference()
     let db = Firestore.firestore()
     var listSanPham = [SanPham]()
@@ -66,12 +66,28 @@ class SanPhamViewController: UIViewController, UITableViewDataSource, UITableVie
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        //print("Test : \(indexPath.row)")
+        
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let sp = sb.instantiateViewController(withIdentifier: "editsanpham") as! EdiSanPhamViewController
+    
+        sp.tenSanPham = listSanPham[indexPath.row].tenSanPham
+        sp.giaLe = listSanPham[indexPath.row].giaVon
+        sp.giaVon = listSanPham[indexPath.row].giaVon
+        self.navigationController?.pushViewController(sp, animated: true)
+    }
+    
 
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func unWinFromSanPham(sender: UIStoryboardSegue){
+        
+    }
+    
+    @IBAction func unWinFromSanPham2(sender: UIStoryboardSegue){
         
     }
     // MARK: - Navigation

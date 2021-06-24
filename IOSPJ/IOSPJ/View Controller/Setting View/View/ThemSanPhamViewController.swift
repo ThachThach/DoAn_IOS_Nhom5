@@ -23,8 +23,7 @@ class ThemSanPhamViewController: UIViewController {
         
         print("Test")
     }
-    
-    
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -52,7 +51,7 @@ class ThemSanPhamViewController: UIViewController {
                 print("Document added with ID: \(ref!.documentID)")
             }
         }
-        
     }
+    
 
 }
