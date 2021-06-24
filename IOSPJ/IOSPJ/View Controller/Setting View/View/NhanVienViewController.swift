@@ -7,22 +7,42 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import Firebase
 
 class NhanVienViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
+    let db = Firestore.firestore()
     var listNhanVien = [NhanVien]()
+
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        let nib = UINib(nibName: "NhanVienTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "NhanVienTableViewCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        
+        db.collection("nhanvien").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    let tenNhanVien = document.data()["tennhanvien"] as? String ?? ""
+                    let chucvu = document.data()["chucvu"] as? String ?? ""
+                    let calam = document.data()["calam"] as? String ?? ""
+                    let email = document.data()["email"] as? String ?? ""
+                    
+                    if let nhanVien = NhanVien(tenNhanVien: tenNhanVien, chucVu: chucvu, email: email, calam: calam){
+                        self.listNhanVien.append(nhanVien)
+                    }
+                }
+                
+                let nib = UINib(nibName: "NhanVienTableViewCell", bundle: nil)
+                self.tableView.register(nib, forCellReuseIdentifier: "NhanVienTableViewCell")
+                self.tableView.delegate = self
+                self.tableView.dataSource = self
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -32,9 +52,31 @@ class NhanVienViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NhanVienTableViewCell", for: indexPath) as! NhanVienTableViewCell
+        cell.tenNhanVienLabel?.text = listNhanVien[indexPath.row].tenNhanVien
+        if listNhanVien[indexPath.row].chucVu == "quanly" {
+            cell.iconNhanVien?.text = "🕵🏻‍♂️"
+        }else if listNhanVien[indexPath.row].chucVu == "bepbar" {
+            cell.iconNhanVien?.text = "👨🏻‍🍳"
+        }else if listNhanVien[indexPath.row].chucVu == "phucvu" {
+            cell.iconNhanVien?.text = "🤵🏼"
+        }
         
         return cell
     }
+    
+    
+    @IBAction func back(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func unWinFromNhanVienCancel(sender: UIStoryboardSegue){
+        
+    }
+    
+    @IBAction func unWinFromNhanVienSave(sender: UIStoryboardSegue){
+        
+    }
+    
 
     /*
     // MARK: - Navigation

@@ -11,8 +11,6 @@ import FirebaseAuth
 
 class SettingViewController: UIViewController {
     
-    @IBOutlet weak var nhomSanPhamButton: UIButton!
-    
     @IBOutlet weak var sanPhamButton: UIButton!
     @IBOutlet weak var soDoPhongButton: UIButton!
     @IBOutlet weak var quanLyNhanVien: UIButton!
@@ -28,9 +26,20 @@ class SettingViewController: UIViewController {
     }
     
     @IBAction func logoutTapped(_ sender: Any) {
-        let storyboard = self.storyboard?.instantiateViewController(withIdentifier: "startvc") as? ViewController
-        self.view.window?.rootViewController = storyboard
-        self.view.window?.makeKeyAndVisible()
+//        let storyboard = self.storyboard?.instantiateViewController(withIdentifier: "startvc") as? ViewController
+//        self.view.window?.rootViewController = storyboard
+//        self.view.window?.makeKeyAndVisible()
+        
+        let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "startvc") as? ViewController
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+        if let navigator = self.navigationController {
+            navigator.pushViewController(homeViewController!, animated: true)
+        }
     }
     
     
@@ -40,15 +49,6 @@ class SettingViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let selecteCell = sender as? ViewController{
-            let firebaseAuth = Auth.auth()
-            do {
-                try firebaseAuth.signOut()
-            } catch let signOutError as NSError {
-                print ("Error signing out: %@", signOutError)
-            }
-        }
-    }
-    
 
+    }
 }

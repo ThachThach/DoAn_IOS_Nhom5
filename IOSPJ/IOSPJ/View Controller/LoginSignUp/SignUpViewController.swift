@@ -13,11 +13,11 @@ import FirebaseFirestore
 
 class SignUpViewController: UIViewController {
 
-    @IBOutlet weak var tenQuanTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!			
     @IBOutlet weak var errorLabel: UILabel!
+    let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,6 @@ class SignUpViewController: UIViewController {
         //Hide the error lable
         errorLabel.alpha = 0
         //style the elements
-        Utilities.styleTextField(tenQuanTextField)
         Utilities.styleTextField(emailTextField)
         Utilities.styleTextField(passwordTextField)
         Utilities.styleHellowButton(signUpButton)
@@ -40,9 +39,9 @@ class SignUpViewController: UIViewController {
     
     func validateFields() -> String? {
         //Check that all fields are filled in
-        if tenQuanTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+        if emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             
-            return "Please fill in all fields"
+            return "Hay nhap day du thong tin"
         }
         
         //check if the password is secure
@@ -50,24 +49,37 @@ class SignUpViewController: UIViewController {
         
         if Utilities.isPasswordValid(cleanedPassword) == false {
             
-            return "Please make sure your password is at least 8 characters, contains a special character and a number."
+            return "Vui long nhap lai password"
         }
         
         return nil
     }
     
     @IBAction func signUpTapped(_ sender: Any) {
-            let tenQuan = tenQuanTextField.text
             let email = emailTextField.text
             let password = passwordTextField.text
-            print (email)
-            print (password)
+            let name = "admin"
+            let chucVu = "1"
+            let calam = "fulltime"
             Auth.auth().createUser(withEmail: email!, password: password!){ (resuls, err) in
+                let em = email as? String ?? ""
+                var ref: DocumentReference? = nil
+                ref = self.db.collection("nhanvien").addDocument(data: [
+                    "calam": "\(calam)",
+                    "chucvu": "\(chucVu)",
+                    "tennhanvien": "\(name)",
+                    "email": "\(em)"
+                ]){
+                    err in
+                    if let err = err {
+                        print("Error adding document: \(err)")
+                    } else {
+                        print("Document added with ID: \(ref!.documentID)")
+                    }
+                }
                 
                 self.transitionToHome();
             }
-        //Transition to the home screen
-        
     }
     
     /*

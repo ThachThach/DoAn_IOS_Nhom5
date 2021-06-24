@@ -27,6 +27,10 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func unWinFromLogin(sender: UIStoryboardSegue){
+        
+    }
+    
     func setUpElements() {
         Utilities.styleHellowButton(signUpButton)
         Utilities.styleHellowButton(loginButton)

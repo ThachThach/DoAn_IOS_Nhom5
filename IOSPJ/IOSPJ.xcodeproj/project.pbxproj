@@ -16,6 +16,7 @@
 		660FF21A26838B8A009E7F14 /* NhanVienTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660FF21826838B8A009E7F14 /* NhanVienTableViewCell.swift */; };
 		660FF21B26838B8A009E7F14 /* NhanVienTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 660FF21926838B8A009E7F14 /* NhanVienTableViewCell.xib */; };
 		660FF21D26838E75009E7F14 /* NhanVien.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660FF21C26838E75009E7F14 /* NhanVien.swift */; };
+		660FF24D26843D0A009E7F14 /* ThemNhanVienViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660FF24C26843D0A009E7F14 /* ThemNhanVienViewController.swift */; };
 		6613BDD42675B6A80031A629 /* ThuChiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6613BDD32675B6A80031A629 /* ThuChiViewController.swift */; };
 		6613BDD72675D4910031A629 /* ThuChiTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6613BDD52675D4910031A629 /* ThuChiTableViewCell.swift */; };
 		6613BDD82675D4910031A629 /* ThuChiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6613BDD62675D4910031A629 /* ThuChiTableViewCell.xib */; };
@@ -73,6 +74,7 @@
 		660FF21826838B8A009E7F14 /* NhanVienTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NhanVienTableViewCell.swift; sourceTree = "<group>"; };
 		660FF21926838B8A009E7F14 /* NhanVienTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NhanVienTableViewCell.xib; sourceTree = "<group>"; };
 		660FF21C26838E75009E7F14 /* NhanVien.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NhanVien.swift; sourceTree = "<group>"; };
+		660FF24C26843D0A009E7F14 /* ThemNhanVienViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemNhanVienViewController.swift; sourceTree = "<group>"; };
 		6613BDD32675B6A80031A629 /* ThuChiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThuChiViewController.swift; sourceTree = "<group>"; };
 		6613BDD52675D4910031A629 /* ThuChiTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThuChiTableViewCell.swift; sourceTree = "<group>"; };
 		6613BDD62675D4910031A629 /* ThuChiTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThuChiTableViewCell.xib; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 				660FF21426838B11009E7F14 /* NhanVienViewController.swift */,
 				660FF21826838B8A009E7F14 /* NhanVienTableViewCell.swift */,
 				660FF21926838B8A009E7F14 /* NhanVienTableViewCell.xib */,
+				660FF24C26843D0A009E7F14 /* ThemNhanVienViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				6620E1E22667B9B7004F343F /* LoginViewController.swift in Sources */,
 				6620E1E02667B9A1004F343F /* SignUpViewController.swift in Sources */,
 				662707892670C69200998A5C /* OderViewController.swift in Sources */,
+				660FF24D26843D0A009E7F14 /* ThemNhanVienViewController.swift in Sources */,
 				667D1A952671B4B600985B10 /* BepBarTableViewCell.swift in Sources */,
 				6605E67D26805574000DC2BA /* ThanhToanTableViewCell.swift in Sources */,
 				660FF21A26838B8A009E7F14 /* NhanVienTableViewCell.swift in Sources */,

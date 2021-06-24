@@ -35,7 +35,6 @@ class ThemSanPhamViewController: UIViewController {
                 UploadDatabaseSanPham(tensanpham: tenSP, giaVon: giaVon, giaLe: giaBan)
             }
         }
-        
     }
     
     // MARK: Them san pham len database

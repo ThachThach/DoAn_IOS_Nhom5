@@ -26,7 +26,6 @@ class LoginViewController: UIViewController {
     }
     
     func setUpElements() {
-        
         //Hide the error lable
             errorLabel.alpha = 0
         //style the elements
