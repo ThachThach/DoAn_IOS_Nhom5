@@ -49,12 +49,13 @@ class LoginViewController: UIViewController {
             }else{
                 let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.homeViewController) as? MainViewController
                 
+                homeViewController?.email = email as? String ?? ""
+                
                 if let navigator = self.navigationController {
                     navigator.pushViewController(homeViewController!, animated: true)
                 }
             }
         }
-
     }
     
     /*

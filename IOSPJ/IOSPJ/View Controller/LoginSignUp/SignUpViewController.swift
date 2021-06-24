@@ -69,6 +69,7 @@ class SignUpViewController: UIViewController {
                     "chucvu": "\(chucVu)",
                     "tennhanvien": "\(name)",
                     "email": "\(em)"
+                    
                 ]){
                     err in
                     if let err = err {
@@ -97,7 +98,7 @@ class SignUpViewController: UIViewController {
         
         let homeViewController =
             storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.homeViewController) as? MainViewController
-        
+        homeViewController?.email = emailTextField?.text as? String ?? ""
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }

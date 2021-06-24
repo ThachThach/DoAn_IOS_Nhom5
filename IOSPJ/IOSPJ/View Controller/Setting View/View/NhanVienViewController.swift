@@ -53,11 +53,11 @@ class NhanVienViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NhanVienTableViewCell", for: indexPath) as! NhanVienTableViewCell
         cell.tenNhanVienLabel?.text = listNhanVien[indexPath.row].tenNhanVien
-        if listNhanVien[indexPath.row].chucVu == "quanly" {
+        if listNhanVien[indexPath.row].chucVu == "1" {
             cell.iconNhanVien?.text = "🕵🏻‍♂️"
-        }else if listNhanVien[indexPath.row].chucVu == "bepbar" {
+        }else if listNhanVien[indexPath.row].chucVu == "3" {
             cell.iconNhanVien?.text = "👨🏻‍🍳"
-        }else if listNhanVien[indexPath.row].chucVu == "phucvu" {
+        }else if listNhanVien[indexPath.row].chucVu == "2" {
             cell.iconNhanVien?.text = "🤵🏼"
         }
         
