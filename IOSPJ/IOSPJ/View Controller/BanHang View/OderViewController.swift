@@ -42,7 +42,7 @@ class OderViewController: UIViewController, UITableViewDelegate, UITableViewData
                     let giaNhap = document.data()["gianhap"] as? String ?? ""
                     let soLuongOder = document.data()["soluongoder"] as? String ?? ""
                     
-                    if let sanPham = SanPham(tenSanPham: tenSanPham, soLuongOder: soLuongOder, giaVon: giaNhap, giaBan: giaBan) {
+                    if let sanPham = SanPham(id: document.documentID,tenSanPham: tenSanPham, soLuongOder: soLuongOder, giaVon: giaNhap, giaBan: giaBan) {
                         self.listSanPham.append(sanPham)
                         
                         let row = self.listSanPham.count

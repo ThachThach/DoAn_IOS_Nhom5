@@ -8,6 +8,8 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
+import Firebase
 
 class SettingViewController: UIViewController {
     
@@ -17,7 +19,10 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var soDoPhongButton: UIButton!
     @IBOutlet weak var quanLyNhanVien: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
-    
+    let db = Firestore.firestore()
+    var listNhanVien = [NhanVien]()
+    var chucVuTime = String()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         var em = String()
@@ -26,8 +31,39 @@ class SettingViewController: UIViewController {
         }
         print("Test dsfsdf\(em)")
         
+        db.collection("nhanvien").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    let tenNhanVien = document.data()["tennhanvien"] as? String ?? ""
+                    let chucvu = document.data()["chucvu"] as? String ?? ""
+                    let calam = document.data()["calam"] as? String ?? ""
+                    let email = document.data()["email"] as? String ?? ""
+                    
+                    if em == email {
+                        self.chucVuTime = document.data()["chucvu"] as? String ?? ""
+                    }
+                    if let nhanVien = NhanVien(id: document.documentID,tenNhanVien: tenNhanVien, chucVu: chucvu, email: email, calam: calam){
+                        self.listNhanVien.append(nhanVien)
+                    }
+                }
+            }
+        }
         // Do any additional setup after loading the view.
         
+    }
+    
+    
+    @IBAction func quanLyNhanVienTapped(_ sender: Any) {
+        if chucVuTime == "1"{
+            let quanlynhanvien = self.storyboard?.instantiateViewController(withIdentifier: "nhanvien") as? NhanVienViewController
+            
+            if let navigator = self.navigationController {
+                navigator.pushViewController(quanlynhanvien!, animated: true)
+            }
+        }
     }
     
     @IBAction func logoutTapped(_ sender: Any) {
@@ -57,6 +93,10 @@ class SettingViewController: UIViewController {
     }
     @IBAction func thongTinUserTapped(_ sender: Any){
         
+    }
+    
+    @IBAction func unWinFromSetting(sender: UIStoryboardSegue){
+
     }
     
 

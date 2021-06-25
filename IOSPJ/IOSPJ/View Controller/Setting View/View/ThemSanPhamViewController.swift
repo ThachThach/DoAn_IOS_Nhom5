@@ -26,11 +26,13 @@ class ThemSanPhamViewController: UIViewController {
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         if let tenSP = tenSanPhamTextField.text, let giaVon = giaVonTextField.text, let giaBan = giaVonTextField.text {
             if let button = sender as? UIBarButtonItem, button === btnSave{
+                let ten = tenSP
+                let giaB = giaBan
+                let giaV = giaVon
                 UploadDatabaseSanPham(tensanpham: tenSP, giaVon: giaVon, giaLe: giaBan)
             }
         }
@@ -40,18 +42,18 @@ class ThemSanPhamViewController: UIViewController {
     func UploadDatabaseSanPham(tensanpham:String, giaVon:String, giaLe:String) {
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
-        ref = db.collection("sanpham").addDocument(data: [
-            "tensanpham": "\(tensanpham)",
-            "gianhap": "\(giaVon)",
-            "giaban": "\(giaLe)"
-        ]) { err in
-            if let err = err {
-                print("Error adding document: \(err)")
-            } else {
-                print("Document added with ID: \(ref!.documentID)")
+        if tensanpham != "", giaVon != "", giaLe != ""{
+            ref = db.collection("sanpham").addDocument(data: [
+                "tensanpham": "\(tensanpham)",
+                "gianhap": "\(giaVon)",
+                "giaban": "\(giaLe)"
+            ]) { err in
+                if let err = err {
+                    print("Error adding document: \(err)")
+                } else {
+                    print("Document added with ID: \(ref!.documentID)")
+                }
             }
         }
     }
-    
-
 }

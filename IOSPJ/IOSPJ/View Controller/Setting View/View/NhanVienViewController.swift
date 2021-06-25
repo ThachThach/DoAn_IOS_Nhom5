@@ -14,7 +14,6 @@ class NhanVienViewController: UIViewController, UITableViewDelegate, UITableView
     
     let db = Firestore.firestore()
     var listNhanVien = [NhanVien]()
-
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -32,7 +31,7 @@ class NhanVienViewController: UIViewController, UITableViewDelegate, UITableView
                     let calam = document.data()["calam"] as? String ?? ""
                     let email = document.data()["email"] as? String ?? ""
                     
-                    if let nhanVien = NhanVien(tenNhanVien: tenNhanVien, chucVu: chucvu, email: email, calam: calam){
+                    if let nhanVien = NhanVien(id: document.documentID,tenNhanVien: tenNhanVien, chucVu: chucvu, email: email, calam: calam){
                         self.listNhanVien.append(nhanVien)
                     }
                 }
@@ -62,6 +61,16 @@ class NhanVienViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            listNhanVien.remove(at: indexPath.row)
+            let id = listNhanVien[indexPath.row].id
+            print("Test \(id)")
+            db.collection("nhanvien").document(id).delete()
+            tableView.reloadData()
+        }
     }
     
     

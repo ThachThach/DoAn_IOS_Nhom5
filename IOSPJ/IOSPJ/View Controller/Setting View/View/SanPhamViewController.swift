@@ -33,7 +33,7 @@ class SanPhamViewController: UIViewController, UITableViewDataSource, UITableVie
                     let giaNhap = document.data()["gianhap"] as? String ?? ""
                     let soLuongOder = document.data()["soluongoder"] as? String ?? ""
                     
-                    if let sanPham = SanPham(tenSanPham: tenSanPham, soLuongOder: soLuongOder, giaVon: giaNhap, giaBan: giaBan) {
+                    if let sanPham = SanPham(id: "\(document.documentID)",tenSanPham: tenSanPham, soLuongOder: soLuongOder, giaVon: giaNhap, giaBan: giaBan) {
                         self.listSanPham.append(sanPham)
                         
                         let row = self.listSanPham.count
@@ -76,7 +76,17 @@ class SanPhamViewController: UIViewController, UITableViewDataSource, UITableVie
         sp.giaLe = listSanPham[indexPath.row].giaVon
         sp.giaVon = listSanPham[indexPath.row].giaVon
         sp.row = "\(indexPath.row)"
+        sp.id = listSanPham[indexPath.row].id
         self.navigationController?.pushViewController(sp, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            listSanPham.remove(at: indexPath.row)
+            let id = listSanPham[indexPath.row].id
+            db.collection("sanpham").document(id).delete()
+            tableView.reloadData()
+        }
     }
     
 
@@ -85,7 +95,8 @@ class SanPhamViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func unWinFromSanPham(sender: UIStoryboardSegue){
-        
+        if let sourceController = sender.source as? ThemSanPhamViewController{
+        }
     }
     
     @IBAction func unWinFromSanPham2(sender: UIStoryboardSegue){
@@ -95,6 +106,7 @@ class SanPhamViewController: UIViewController, UITableViewDataSource, UITableVie
             let giaVon = sourceController.giaVon as? String ?? ""
             let tenSanPham = sourceController.tenSanPham as? String ?? ""
 
+            
             //print("Test sanpham \(tenSanPham)")
             
             listSanPham[dong!].giaVon = "\(giaVon)"

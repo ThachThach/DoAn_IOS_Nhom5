@@ -9,15 +9,17 @@
 import Foundation
 
 class NhanVien{
+    var id : String
     var tenNhanVien : String
     var chucVu : String
     var email : String
     var calam : String
     
-    init?(tenNhanVien:String, chucVu:String, email:String, calam:String){
+    init?(id:String, tenNhanVien:String, chucVu:String, email:String, calam:String){
         if tenNhanVien.isEmpty{
             return nil
         }
+        self.id = id
         self.tenNhanVien = tenNhanVien
         self.chucVu = chucVu
         self.email = email
