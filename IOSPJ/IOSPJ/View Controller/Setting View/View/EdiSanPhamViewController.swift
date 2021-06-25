@@ -18,7 +18,7 @@ class EdiSanPhamViewController: UIViewController {
     var tenSanPham = String()
     var giaVon = String()
     var giaLe = String()
-    let row = String()
+    var row = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +33,12 @@ class EdiSanPhamViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             super.prepare(for: segue, sender: sender)
+        tenSanPham = tenSanPhamTextField?.text as? String ?? ""
+        giaVon = giaVonTextField?.text as? String ?? ""
+        giaLe = giaLeTextField?.text as? String ?? ""
         
+        row = "\(row)"
+        print("Test row \(row)")
     }
     
     

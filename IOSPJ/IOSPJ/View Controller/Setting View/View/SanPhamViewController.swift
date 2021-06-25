@@ -75,6 +75,7 @@ class SanPhamViewController: UIViewController, UITableViewDataSource, UITableVie
         sp.tenSanPham = listSanPham[indexPath.row].tenSanPham
         sp.giaLe = listSanPham[indexPath.row].giaVon
         sp.giaVon = listSanPham[indexPath.row].giaVon
+        sp.row = "\(indexPath.row)"
         self.navigationController?.pushViewController(sp, animated: true)
     }
     
@@ -88,6 +89,22 @@ class SanPhamViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func unWinFromSanPham2(sender: UIStoryboardSegue){
+        if let sourceController = sender.source as? EdiSanPhamViewController{
+            let dong = Int(sourceController.row as String)
+            let giaBan = sourceController.giaLe as String
+            let giaVon = sourceController.giaVon as? String ?? ""
+            let tenSanPham = sourceController.tenSanPham as? String ?? ""
+
+            //print("Test sanpham \(tenSanPham)")
+            
+            listSanPham[dong!].giaVon = "\(giaVon)"
+            listSanPham[dong!].tenSanPham = tenSanPham
+            listSanPham[dong!].giaBan = giaBan
+            
+            tableView.delegate = self
+            tableView.dataSource = self
+            tableView.reloadData()
+        }
         
     }
     // MARK: - Navigation
